@@ -3,10 +3,23 @@ from sqlalchemy.orm import Session
 from database import engine, get_db
 from models import Base, Buch, Mitglied, Ausleihe
 import datetime
+import os
+import json
+
+from kafka import KafkaProducer
+from kafka.errors import NoBrokersAvailable
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Bücherei API")
+
+try:
+    producer = KafkaProducer(
+        bootstrap_servers=os.getenv("KAFKA_BOOTSTRAP_SERVERS", "kafka:9092"),
+        value_serializer=lambda v: json.dumps(v).encode("utf-8")
+    )
+except NoBrokersAvailable:
+    producer = None
 
 @app.get("/")
 def root():
@@ -39,6 +52,7 @@ def add_mitglied(name: str, email: str, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(mitglied)
     return mitglied
+
 @app.get("/ausleihen")
 def get_ausleihen(db: Session = Depends(get_db)):
     return db.query(Ausleihe).all()
@@ -55,6 +69,13 @@ def ausleihe_buch(buch_id: int, mitglied_id: int, db: Session = Depends(get_db))
     db.add(ausleihe)
     db.commit()
     db.refresh(ausleihe)
+    if producer:
+        producer.send("ausleihe-events", {
+            "event": "ausleihe",
+            "buch_id": buch_id,
+            "mitglied_id": mitglied_id,
+            "datum": str(datetime.date.today())
+        })
     return ausleihe
 
 @app.put("/ausleihen/{ausleihe_id}/iade")
@@ -69,4 +90,10 @@ def iade_buch(ausleihe_id: int, db: Session = Depends(get_db)):
     buch.menge += 1
     db.commit()
     db.refresh(ausleihe)
+    if producer:
+        producer.send("ausleihe-events", {
+            "event": "iade",
+            "ausleihe_id": ausleihe_id,
+            "datum": str(datetime.date.today())
+        })
     return ausleihe
