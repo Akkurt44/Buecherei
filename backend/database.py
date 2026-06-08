@@ -1,9 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import os
 
-DATABASE_URL = "sqlite:///./buecherei.db"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://buecherei:buecherei123@localhost:5432/buecherei"
+)
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():

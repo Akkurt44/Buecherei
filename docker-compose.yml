@@ -1,0 +1,21 @@
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: buecherei
+      POSTGRES_PASSWORD: buecherei123
+      POSTGRES_DB: buecherei
+    ports:
+      - "5432:5432"
+
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://buecherei:buecherei123@db:5432/buecherei
+    depends_on:
+      - db
+
+    restart: on-failure
