@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuechereiApp.Pages.BuecherPage"
+             Title="Bücher">
+
+    <StackLayout Padding="20" Spacing="10">
+
+        <Entry x:Name="TitelEntry" Placeholder="Titel"/>
+        <Entry x:Name="AutorEntry" Placeholder="Autor"/>
+        <Entry x:Name="IsbnEntry" Placeholder="ISBN"/>
+        <Entry x:Name="MengeEntry" Placeholder="Menge" Keyboard="Numeric"/>
+
+        <Button Text="Buch hinzufügen"
+                Clicked="OnHinzufuegenClicked"/>
+
+        <Button Text="Bücher laden"
+                Clicked="OnLadenClicked"/>
+
+        <ListView x:Name="BuecherListe">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Titel}"
+                              Detail="{Binding Autor}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+
+</ContentPage>

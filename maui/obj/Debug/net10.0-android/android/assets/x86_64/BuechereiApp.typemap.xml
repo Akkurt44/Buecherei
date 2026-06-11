@@ -1,0 +1,10 @@
+<api type="debug" assembly-name="BuechereiApp" mvid="0a9d18ba197543ac872603676fcc0d50">
+  <java-to-managed>
+    <entry java-name="crc6410cbfa09aa3b4ae7/MainActivity" managed-name="BuechereiApp.MainActivity, BuechereiApp" managed-type-token-id="33554441" />
+    <entry java-name="crc6410cbfa09aa3b4ae7/MainApplication" managed-name="BuechereiApp.MainApplication, BuechereiApp" managed-type-token-id="33554442" />
+  </java-to-managed>
+  <managed-to-java>
+    <entry java-name="crc6410cbfa09aa3b4ae7/MainActivity" managed-name="BuechereiApp.MainActivity, BuechereiApp" managed-type-token-id="33554441" />
+    <entry java-name="crc6410cbfa09aa3b4ae7/MainApplication" managed-name="BuechereiApp.MainApplication, BuechereiApp" managed-type-token-id="33554442" />
+  </managed-to-java>
+</api>
