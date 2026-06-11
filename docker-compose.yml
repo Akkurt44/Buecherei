@@ -41,3 +41,13 @@ services:
       - db
       - kafka
     restart: on-failure
+  consumer:
+    build: ./backend
+    command: python consumer.py
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SMTP_PASSWORD: BM9zuaio4yGQFkgCJiQFOwN9phxllirVc01XeaVB8y6Y
+      PYTHONUNBUFFERED: "1"
+    depends_on:
+      - kafka
+    restart: on-failure
