@@ -13,14 +13,19 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Bücherei API")
 
-try:
-    producer = KafkaProducer(
-        bootstrap_servers=os.getenv("KAFKA_BOOTSTRAP_SERVERS", "kafka:9092"),
-        value_serializer=lambda v: json.dumps(v).encode("utf-8")
-    )
-except NoBrokersAvailable:
-    producer = None
+def get_producer():
+    while True:
+        try:
+            p = KafkaProducer(
+                bootstrap_servers=os.getenv("KAFKA_BOOTSTRAP_SERVERS", "kafka:9092"),
+                value_serializer=lambda v: json.dumps(v).encode("utf-8")
+            )
+            return p
+        except NoBrokersAvailable:
+            time.sleep(2)
 
+import time
+producer = get_producer()
 @app.get("/")
 def root():
     return {"message": "Bücherei API çalışıyor"}

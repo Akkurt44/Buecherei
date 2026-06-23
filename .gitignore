@@ -3,3 +3,5 @@ __pycache__/
 *.db
 *.pyc
 .terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
