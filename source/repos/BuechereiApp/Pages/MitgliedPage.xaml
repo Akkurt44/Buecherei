@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuechereiApp.Pages.MitgliedPage"
+             Title="Mitglieder">
+
+    <StackLayout Padding="20" Spacing="10">
+
+        <Entry x:Name="NameEntry" Placeholder="Name"/>
+        <Entry x:Name="EmailEntry" Placeholder="Email"/>
+
+        <Button Text="Mitglied hinzufügen"
+                Clicked="OnHinzufuegenClicked"/>
+
+        <Button Text="Mitglieder laden"
+                Clicked="OnLadenClicked"/>
+
+        <ListView x:Name="MitgliederListe">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}"
+                              Detail="{Binding Email}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+
+</ContentPage>

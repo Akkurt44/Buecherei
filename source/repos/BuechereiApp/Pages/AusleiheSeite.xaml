@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuechereiApp.Pages.AusleiheSeite"
+             Title="Ausleihe">
+    <StackLayout Padding="20" Spacing="10">
+        <Entry x:Name="BuchIdEntry" Placeholder="Buch ID" Keyboard="Numeric"/>
+        <Entry x:Name="MitgliedIdEntry" Placeholder="Mitglied ID" Keyboard="Numeric"/>
+        <Button Text="Buch ausleihen"
+                Clicked="OnAusleihenClicked"/>
+        <Entry x:Name="AusleiheIdEntry" Placeholder="Ausleihe ID (für Rückgabe)" Keyboard="Numeric"/>
+        <Button Text="Buch zurückgeben"
+                Clicked="OnIadeClicked"/>
+        <Button Text="Ausleihen laden"
+                Clicked="OnLadenClicked"/>
+        <ListView x:Name="AusleihenListe">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" Spacing="2">
+                            <Label Text="{Binding BuchId, StringFormat='📚 Buch-ID: {0}'}" FontAttributes="Bold"/>
+                            <Label Text="{Binding MitgliedId, StringFormat='👤 Mitglied-ID: {0}'}"/>
+                            <Label Text="{Binding AusleiheDatum, StringFormat='📅 Ausleihe: {0}'}"/>
+                            <Label Text="{Binding RueckgabeDatum, StringFormat='🔄 Rückgabe: {0}'}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
